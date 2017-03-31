@@ -53,7 +53,7 @@ export default {
                 return (
                     <tr key={ brewery.id }>
                         <td>{ brewery.name }</td>
-                        <td>{ brewery.ciry }</td>
+                        <td>{ brewery.city }</td>
                         <td>{ brewery.phone }</td>
                         <td class="is-icon">
                             <a href="#">
