@@ -4,12 +4,12 @@ export default {
   name: 'app',
   components: {
     Cervejarias
-    },
-  render (){
-      return (
+  },
+  render() {
+    return (
       <div id="app">
         <Cervejarias></Cervejarias>
       </div>
-      );
+    );
   }
 }

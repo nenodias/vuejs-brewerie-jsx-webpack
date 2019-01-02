@@ -6,10 +6,10 @@ import './App.css';
 Vue.use(VueResource)
 
 new Vue({
-  components: { App },
-  render(){
-      return (
-          <App />
-      );
-  }
+    components: { App },
+    render() {
+        return (
+            <App />
+        );
+    }
 }).$mount('#app')

@@ -4,57 +4,58 @@ import _ from 'lodash';
 const HOST = "http://localhost:3000";
 
 export default {
-    components:{
+    components: {
         Pagination
     },
     data() {
         return {
-                isLoading: false,
-                title: "Vue.js Crud",
-                search: "",
-                breweries: [],
-                page: 1,
-                total: 0,
-                selected: {},
-                itensPerPage: 10
+            isLoading: false,
+            title: "Vue.js Crud",
+            search: "",
+            breweries: [],
+            page: 1,
+            total: 0,
+            selected: {},
+            itensPerPage: 10
         };
     },
-    methods:{
-        showLoading(){
+    methods: {
+        showLoading() {
             this.isLoading = true;
         },
-        hideLoading(){
+        hideLoading() {
             this.isLoading = false;
         },
-        async loadBreweries(){
+        async loadBreweries() {
             this.showLoading();
 
             let start = (this.page * this.itensPerPage) - this.itensPerPage;
             let end = (this.page * this.itensPerPage);
-            try{
+            try {
                 let response = await this.$http.get(`${HOST}/breweries?_start=${start}&_end=${end}`);
                 this.breweries = await response.json();
-                this.total = response.headers.map['X-Total-Count'];
-            }catch(err){
+                console.log(response.headers.map);
+                this.total = response.headers.map['x-total-count'];
+            } catch (err) {
                 console.error(err);
-            }finally{
+            } finally {
                 this.hideLoading();
             }
         },
-        searchBreweries(){
+        searchBreweries() {
 
         },
-        async onChangePage(page){
+        async onChangePage(page) {
             this.page = page;
             this.loadBreweries();
         },
-        breweriesRows(){
-            return _.map(this.breweries,function(brewery){
+        breweriesRows() {
+            return _.map(this.breweries, function (brewery) {
                 return (
-                    <tr key={ brewery.id }>
-                        <td>{ brewery.name }</td>
-                        <td>{ brewery.city }</td>
-                        <td>{ brewery.phone }</td>
+                    <tr key={brewery.id}>
+                        <td>{brewery.name}</td>
+                        <td>{brewery.city}</td>
+                        <td>{brewery.phone}</td>
                         <td class="is-icon">
                             <a href="#">
                                 <i class="fa fa-map-marker"></i>
@@ -75,21 +76,21 @@ export default {
                 );
             });
         },
-        renderLoading(){
+        renderLoading() {
             return (<a class="fixo button is-large is-danger is-loading">Loading</a>);
         }
     },
-    async mounted(){
+    async mounted() {
         this.loadBreweries();
     },
-    render(){
+    render() {
         let t = this;
-        if(t.loading){
+        if (t.loading) {
             t.renderLoading();
         }
         return (
             <div class="container">
-                <h1 class="title">{ t.title }</h1>
+                <h1 class="title">{t.title}</h1>
                 <div class="columns">
                     <div class="column is-5">
                         <p class="control has-addons">
@@ -111,10 +112,10 @@ export default {
                                 <th>Ações</th>
                             </thead>
                             <tbody>
-                                { t.breweriesRows() }
+                                {t.breweriesRows()}
                             </tbody>
                         </table>
-                        <Pagination total={ t.total } page={ t.page } itensPerPage={ t.itensPerPage } onChange={ t.onChangePage.bind(this) } />
+                        <Pagination total={t.total} page={t.page} itensPerPage={t.itensPerPage} onChange={t.onChangePage.bind(this)} />
                     </div>
                 </div>
             </div>
